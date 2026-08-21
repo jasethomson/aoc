@@ -24,7 +24,7 @@ const getPuzzle = async ({ year, day }: {year: number; day: number }): Promise<v
         await fs.writeFile(absolutePath, $('main').text());
     } catch (err) {
         console.warn('Error creating file, attempting to create dir and then create file', err);
-        // 1. Ensure the directory exists recursively (async)
+
         const dirPath = path.dirname(absolutePath);
         await fs.mkdir(dirPath, { recursive: true });
 
