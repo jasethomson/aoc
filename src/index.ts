@@ -1,7 +1,7 @@
 import process from 'node:process';
 process.loadEnvFile();
 
-import { getPuzzle, getPuzzleInput } from './utils';
+import { setUpPuzzle } from './utils';
 
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
@@ -18,6 +18,6 @@ import { getPuzzle, getPuzzleInput } from './utils';
 
     const year = parseInt(yearDayMatch[1]);
     const day = parseInt(yearDayMatch[2]);
-    await getPuzzle({ day, year });
-    await getPuzzleInput({ day, year });
+
+    await setUpPuzzle({ day, year });
 })();
