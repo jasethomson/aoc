@@ -1,4 +1,4 @@
-const requestPuzzleHtml = async ({ year, day }: {year: number; day: number }): Promise<string> => {
+const requestAocHtml = async ({ url }: {url: string }): Promise<string> => {
     if (typeof process.env.AOC_COOKIE !== 'string') {
         throw new Error('Invalid cookie input for getPuzzle');
     }
@@ -10,17 +10,17 @@ const requestPuzzleHtml = async ({ year, day }: {year: number; day: number }): P
             }
         };
 
-        const htmlRes = await fetch(`https://adventofcode.com/${year}/day/${day}`, reqOptions);
+        const htmlRes = await fetch(url, reqOptions);
         
         if (!htmlRes.ok) {
-            throw new Error(`Error code ${htmlRes.status} while requesting puzzle for ${year}-${day}`);
+            throw new Error(`Error code ${htmlRes.status} while requesting puzzle for ${url}`);
         }
 
         return await htmlRes.text();
     } catch (err) {
         console.error('getPuzzle error:', err);
-        throw new Error(`Failed to fetch puzzle for ${year}-${day}`);
+        throw new Error(`Failed to fetch puzzle for ${url}`);
     }
 }
 
-export default requestPuzzleHtml;
+export default requestAocHtml;

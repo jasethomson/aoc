@@ -2,8 +2,8 @@ import * as cheerio from 'cheerio';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import requestPuzzleHtml from './requestPuzzleHtml';
 import formatDayStr from './formatDayStr';
+import requestAocHtml from './requestAocHtml';
 
 const getPuzzle = async ({ year, day }: {year: number; day: number }): Promise<void> => {
     const filePath = `../${year}/puzzles/${formatDayStr(day.toString())}.MD`;
@@ -17,7 +17,7 @@ const getPuzzle = async ({ year, day }: {year: number; day: number }): Promise<v
         console.warn('Error reading file, requesting and creating the file', err);
     }
 
-    const puzzleRes = await requestPuzzleHtml({ year, day });
+    const puzzleRes = await requestAocHtml({ url: `https://adventofcode.com/${year}/day/${day}` });
     const $ = cheerio.load(puzzleRes);
 
     try {
