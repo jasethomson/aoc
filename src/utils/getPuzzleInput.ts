@@ -1,14 +1,16 @@
 import path from 'path';
 
+import { Puzzle } from '../types';
+
 import formatDayStr from './formatDayStr';
 import requestAocHtml from './requestAocHtml';
 import checkIfFileExists from './checkIfFileExists';
 import writeFileAndCreateDirs from './writeFileAndCreateDirs';
 
-const getPuzzleInput = async ({ year, day }: {year: number; day: number }): Promise<void> => {
-    const filePath = `../${year}/inputs/${formatDayStr(day.toString())}.txt`;
-    const absolutePath = path.join(__dirname, filePath);
-    const loggingName = absolutePath.split(/\\|\//).pop();
+const getPuzzleInput = async ({ year, day }: Puzzle): Promise<void> => {
+    const dirPath = `../${year}/inputs`;
+    const fileName = `${formatDayStr(day.toString())}.txt`;
+    const absolutePath = path.join(__dirname, `${dirPath}/${fileName}`);
 
     const puzzleInputExists = await checkIfFileExists({ absolutePath });
     if (puzzleInputExists) return;
@@ -17,7 +19,7 @@ const getPuzzleInput = async ({ year, day }: {year: number; day: number }): Prom
 
     await writeFileAndCreateDirs({ absolutePath, contents: puzzleInputRes });
 
-    console.info(`Created puzzle input file: ${loggingName}`);
+    console.info(`Created puzzle input file: ${fileName}`);
 }
 
 export default getPuzzleInput;

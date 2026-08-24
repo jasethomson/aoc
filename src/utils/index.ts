@@ -2,6 +2,7 @@ import checkIfFileExists from './checkIfFileExists';
 import formatDayStr from './formatDayStr';
 import getPuzzle from './getPuzzle';
 import getPuzzleInput from './getPuzzleInput';
+import getTsReady from './getTsReady';
 import requestAocHtml from './requestAocHtml';
 import setUpPuzzle from './setUpPuzzle';
 import writeFileAndCreateDirs from './writeFileAndCreateDirs';
@@ -12,6 +13,7 @@ export {
     formatDayStr,
     getPuzzle,
     getPuzzleInput,
+    getTsReady,
     requestAocHtml,
     setUpPuzzle,
     writeFileAndCreateDirs,
