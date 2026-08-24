@@ -1,15 +1,13 @@
-import { exec } from 'child_process'
-import path from 'path'
 import process from 'node:process';
 process.loadEnvFile();
 
-import { formatDayStr, setUpPuzzle } from './utils';
+import {  setUpPuzzle } from './utils';
 
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
     if (process.argv.length !== 3 || yearDayRegex.test(process.argv[3])) {
         console.warn('Require year and day input in this format: year=xxxxday=xx, please retry.');
-        // return; s
+        return;
     }
 
     const yearDayMatch = process.argv[2].match(yearDayRegex);
