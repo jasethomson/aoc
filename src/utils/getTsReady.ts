@@ -23,8 +23,12 @@ const getTsReady = async ({ year, day }: Puzzle ): Promise<void> => {
     try {
         fileContents = await fs.readFile(templatePath, 'utf8');
     } catch (err) {
-        console.error(`Error reading solvePuzzle typescript file: ${templatePath}`, err);
-        return;
+        if (!(err instanceof Error) || !err.message.includes(' no such file or directory')) {
+            console.error(`Error reading solvePuzzle typescript file: ${templatePath}`, err);
+            return;
+        }
+        const jsTemplatePath = templatePath.replace('.ts', '.js');
+        fileContents = await fs.readFile(jsTemplatePath, 'utf8');
     }
 
     let updatedFileContents = fileContents.replace(/\.\.\//g, '../../');
