@@ -1,6 +1,9 @@
 import process from 'node:process';
 process.loadEnvFile();
 
+// add puzzle import here
+import main from './2015/solutions/03';
+
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
     if (process.argv.length !== 3 || yearDayRegex.test(process.argv[3])) {
@@ -18,4 +21,7 @@ process.loadEnvFile();
     const day = parseInt(yearDayMatch[2]);
 
     console.info(`Running app for puzzle ${year}-${day}`);
-})();
+
+    // run puzzle here
+    await main({ year, day });
+});
