@@ -2,7 +2,7 @@ import process from 'node:process';
 process.loadEnvFile();
 
 // add puzzle import here
-import main from './2015/solutions/03';
+import main from './2015/solutions/01';
 
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
@@ -24,4 +24,4 @@ import main from './2015/solutions/03';
 
     // run puzzle here
     await main({ year, day });
-});
+})();

@@ -32,7 +32,7 @@ const getTsReady = async ({ year, day }: Puzzle ): Promise<void> => {
     }
 
     let updatedFileContents = fileContents.replace(/\.\.\//g, '../../');
-    const puzzleInputPath = `${dirPath}/${fileName}`.replace('solutions', 'inputs').replace('.ts', '.txt');
+    const puzzleInputPath = `${dirPath.replace(`${year}/`, '')}/${fileName}`.replace('solutions', 'inputs').replace('.ts', '.txt');
     updatedFileContents = updatedFileContents.replace(/REPLACE_FILE_NAME_HERE/, puzzleInputPath);
 
     await writeFileAndCreateDirs({ absolutePath: puzzlePath, contents: updatedFileContents });
