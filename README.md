@@ -15,7 +15,7 @@ Clone, install dependencies, and setup the environment:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/jasethomson/aoc
+   git clone https://github.com/jasethomson/aoc.git
    cd aoc
    ```
 
