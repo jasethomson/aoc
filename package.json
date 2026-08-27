@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "setup": "tsx watch src/setup.ts"
+    "setup": "tsx src/setup.ts"
   },
   "repository": {
     "type": "git",
