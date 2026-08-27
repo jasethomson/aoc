@@ -7,7 +7,8 @@ const writeFileAndCreateDirs = async ({ absolutePath, contents }: { absolutePath
       await fs.writeFile(absolutePath, contents);
   } catch (err) {
       if (!(err instanceof Error) || !err.message.includes(' no such file or directory')) {
-          throw err;
+        console.error(`Failed to write file ${absolutePath}`, err);
+        throw err;
       }
 
       console.warn(`Not all directories found for ${loggingName}, creating directories..`);

@@ -8,6 +8,7 @@ const checkIfFileExists = async ({ absolutePath }: { absolutePath: string; }): P
       return true;
   } catch (err) {
       if (!(err instanceof Error) || !err.message.includes(' no such file or directory')) {
+          console.error(`Failed to check if file exists for ${absolutePath} with err:`, err);
           throw err;
       }
 

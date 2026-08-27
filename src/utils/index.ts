@@ -1,3 +1,4 @@
+import addIndex from './addIndex';
 import checkIfFileExists from './checkIfFileExists';
 import formatDayStr from './formatDayStr';
 import getPuzzle from './getPuzzle';
@@ -10,6 +11,7 @@ import writeFileAndCreateDirs from './writeFileAndCreateDirs';
 
 
 export {
+    addIndex,
     checkIfFileExists,
     formatDayStr,
     getPuzzle,
