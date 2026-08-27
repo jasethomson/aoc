@@ -8,7 +8,7 @@ The app is really just two scripts:
 This script will scrape the AOC puzzle text and input. It will then add a file for each of these, and a solution file which read the input, and logs out the first 150 chars. And lastly, it will add or update the index.ts file to call the puzzle solution function specified with the script.
 
 ### dev script:
-This script will run/watch the index.ts file, which calls the solution file for the puzzle you're working on. 
+This script will run/watch the index.ts file, which calls the solution function for the puzzle you're working on. 
 
 ## Getting Started
 
