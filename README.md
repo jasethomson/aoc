@@ -3,10 +3,11 @@
 A simple Node.js project written in Typescript, to work on coding challenges from Advent of Code. 
 
 The app is really just two scripts:
-setup script:
+
+### setup script:
 This script will scrape the AOC puzzle text and input. It will then add a file for each of these, and a solution file which reads and logs out the first 150 chars of input. And finally it will add or updates the index.ts file to call the puzzle solution file specified with the script
 
-dev script:
+### dev script:
 This script will run/watch the index.ts file, which calls the solution file for the puzzle you're working on. 
 
 ## Getting Started
