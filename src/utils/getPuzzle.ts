@@ -21,7 +21,10 @@ const getPuzzle = async ({ year, day }: Puzzle): Promise<void> => {
     const puzzleExists = await checkIfFileExists({ absolutePath });
     if (puzzleExists && !part2) return;
 
-    const puzzleHtml = $('main').html();
+    let puzzleHtml = '';
+    $('main').find('article').each((i, article) => {
+        puzzleHtml += $(article).html();
+    });
 
     if (!puzzleHtml) {
         console.warn('No puzzle html found.');
