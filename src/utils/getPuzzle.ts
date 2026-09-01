@@ -10,16 +10,25 @@ import writeFileAndCreateDirs from './writeFileAndCreateDirs';
 
 const getPuzzle = async ({ year, day }: Puzzle): Promise<void> => {
     const dirPath = `../${year}/puzzles`;
-    const fileName = `${formatDayStr(day.toString())}.MD`;
+    const fileName = `${formatDayStr(day.toString())}.html`;
     const absolutePath = path.join(__dirname, `${dirPath}/${fileName}`);
-
-    const puzzleExists = await checkIfFileExists({ absolutePath });
-    if (puzzleExists) return;
 
     const puzzleRes = await requestAocHtml({ url: `https://adventofcode.com/${year}/day/${day}` });
     const $ = cheerio.load(puzzleRes);
 
-    await writeFileAndCreateDirs({ absolutePath, contents: $('main').text() });
+    const part2 = $('.day-desc').has('#part2');
+
+    const puzzleExists = await checkIfFileExists({ absolutePath });
+    if (puzzleExists && !part2) return;
+
+    const puzzleHtml = $('main').html();
+
+    if (!puzzleHtml) {
+        console.warn('No puzzle html found.');
+        return;
+    }
+
+    await writeFileAndCreateDirs({ absolutePath, contents: puzzleHtml });
     console.info(`Created puzzle file: ${fileName}`);
 }
 
