@@ -24,13 +24,13 @@ const submitAnswer = async ({ year, day, level, answer }: SubmitAnswer): Promise
     try {
         const htmlRes = await fetch(url, reqOptions);
         if (!htmlRes.ok) {
-            throw new Error(`Error code ${htmlRes.status} while requesting puzzle for ${url}`);
+            throw new Error(`Error code ${htmlRes.status} while submitting puzzle for ${url}`);
         }
 
         return await htmlRes.text();
     } catch (err) {
         console.error('submitAnswer error:', err);
-        throw new Error(`Failed to fetch puzzle for ${url}`);
+        throw new Error(`Failed to submit puzzle for ${url}`);
     }
 }
 
