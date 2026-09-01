@@ -1,0 +1,51 @@
+import fs from 'fs/promises';
+import path from 'path';
+
+import { Puzzle } from '../../types';
+import { formatDayStr } from '../../utils';
+
+const main = async ({ year, day }: { year: number, day: number }): Promise<void> => {
+    const puzzleInput = await fs.readFile(path.join(__dirname, '../inputs/01.txt'), 'utf8');
+    const puzzleSample = puzzleInput.slice(0, 16);
+    console.info(`Puzzle ${year}-${day} has been setup, here's a sample of the input`, puzzleSample);
+
+    part1({ puzzleInput });
+    part2({ puzzleInput });
+};
+
+const part1 = ({ puzzleInput }: { puzzleInput: string }) => {
+    let currentFloor = 0;
+    puzzleInput.split('').forEach((direction, index) => {
+        if (direction === '(') {
+            currentFloor += 1;
+        } else if (direction === ')') {
+            currentFloor -= 1;
+        } else {
+            throw new Error(`Found unexpected puzzle character ${direction} at index ${index}.`);
+        }
+    });
+
+    console.log({ currentFloor });
+}
+
+const part2 = ({ puzzleInput }: { puzzleInput: string }) => {
+    let currentFloor = 0;
+    const base0Index = puzzleInput.split('').findIndex((direction, index) => {
+        if (direction === '(') {
+            currentFloor += 1;
+        } else if (direction === ')') {
+            currentFloor -= 1;
+        } else {
+            throw new Error(`Found unexpected puzzle character ${direction} at index ${index}.`);
+        }
+        
+        if (currentFloor === -1) {
+            return true;
+        }
+        return false;
+    });
+
+    console.log({ basementIndex: base0Index + 1 });
+}
+
+export default main;
