@@ -13,7 +13,7 @@ After solving part 1 of a puzzle, rerun the setup script to update the puzzle in
 This script will run/watch the index.ts file, which calls the solution function for the puzzle you're working on. 
 
 ### submit script:
-This script will submit an answer for a puzzle based on the inputs provided, year, day, level, and answer in this format: year{xxxx}day={xx} {level} {answer}. It will print back these details that the answer was submitted for and the answer response from Advent of Code.
+This script will submit an answer for a puzzle based on the inputs provided, year, day, level, and answer in this format: year{xxxx}day={xx} level={x}ans={xxx}. It will print back these details that the answer was submitted for and the answer response from Advent of Code.
 
 ## Getting Started
 
@@ -46,8 +46,8 @@ Clone, install dependencies, and setup the environment:
 npm run setup year=2015day=1
 # Run the application
 npm run dev year=2015day=1
-# Submit an anwer for a puzzle, format year{xxxx}day={xx} {level} {answer}
-npm run dev year=2015day=1 1 1645 
+# Submit an anwer for a puzzle, format year{xxxx}day={xx} level={x}ans={xxx}
+npm run dev year=2015day=1 level=1ans=1645 
 # After solving part 1, rerun the setup script to update the puzzle instructions with part 2, no need to change the script input. 
 npm run setup year=2015day=1
 ```
