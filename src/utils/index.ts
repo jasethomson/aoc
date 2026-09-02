@@ -6,6 +6,7 @@ import getPuzzleInput from './getPuzzleInput';
 import getTsReady from './getTsReady';
 import requestAocHtml from './requestAocHtml';
 import setUpPuzzle from './setUpPuzzle';
+import submitAnswer from './submitAnswer';
 import updateIndexWithPuzzle from './updateIndexWithPuzzle';
 import writeFileAndCreateDirs from './writeFileAndCreateDirs';
 
@@ -19,6 +20,7 @@ export {
     getTsReady,
     requestAocHtml,
     setUpPuzzle,
+    submitAnswer,
     updateIndexWithPuzzle,
     writeFileAndCreateDirs,
 };
