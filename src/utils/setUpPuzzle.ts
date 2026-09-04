@@ -6,7 +6,17 @@ import getPuzzleInput from "./getPuzzleInput";
 import getTsReady from './getTsReady';
 
 const setUpPuzzle = async ({ day, year }: Puzzle): Promise<void> => {
-  await getPuzzle({ day, year });
+  try {
+    await getPuzzle({ day, year });
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('Error code 404')) {
+      console.error(`Puzzle ${year}-${day} not found for aoc, cannot setup puzzle.`);
+      return;
+    }
+
+    throw err;
+  }
+
   await getPuzzleInput({ day, year });
   await addIndex();
   await getTsReady({ day, year });

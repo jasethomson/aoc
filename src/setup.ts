@@ -20,7 +20,5 @@ import { setUpPuzzle, updateIndexWithPuzzle } from './utils';
     const day = parseInt(yearDayMatch[2]);
 
     await setUpPuzzle({ day, year });
-
-    // update index.ts with call to current day and year
     await updateIndexWithPuzzle({ day, year });
 })();
