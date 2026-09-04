@@ -10,6 +10,7 @@ const main = async ({ year, day }: { year: number, day: number }): Promise<void>
 
     const puzzleInputArr = puzzleInput.trim().split('\n');
     part1(puzzleInputArr);
+    part2(puzzleInputArr);
 };
 
 const part1 = (puzzleInput: string[]) => {
@@ -29,6 +30,21 @@ const part1 = (puzzleInput: string[]) => {
     );
 
     console.log({ totalSqft });
+};
+
+const part2 = (puzzleInput: string[]) => {
+    const totalRibbon = puzzleInput.reduce(
+        (ribbonSum, present) => {
+            const [ a, b, c ] = present.split('x').map(str => parseInt(str)).sort((a, b) => a - b);
+
+            const presentRibbon = a*2 + b*2;
+            const bowRibbon = a*b*c;
+            return ribbonSum + presentRibbon + bowRibbon;
+        },
+        0
+    );
+
+    console.log({ totalRibbon });
 };
 
 export default main;
