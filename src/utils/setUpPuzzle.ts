@@ -10,7 +10,7 @@ const setUpPuzzle = async ({ day, year }: Puzzle): Promise<void> => {
     await getPuzzle({ day, year });
   } catch (err) {
     if (err instanceof Error && err.message.includes('Error code 404')) {
-      console.error(`Puzzle ${year}-${day} not found for aoc, cannot setup puzzle.`);
+      console.error(`Puzzle ${year}-${day} not found for aoc, cannot set up puzzle.`);
       return;
     }
 

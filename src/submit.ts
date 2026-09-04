@@ -58,14 +58,19 @@ import { Puzzle } from './types';
 
     if (answRes.includes("That's the right answer!")) {
         if (level === '1') {
-            console.log(`Congratulations on completing level 1, updating puzzle ${year}-${day} with level 2 instructions.`);
+            console.log(`Nice job on completing level 1, updating puzzle ${year}-${day} with level 2 instructions.`);
             await setUpPuzzle({ day, year });
         } else if (level === '2') {
             const nextPuzzle = pickNextPuzzle({ year, day });
-            console.log(`Congratulations on completing puzzle ${year}-${day}, setting up the next puzzle ${nextPuzzle.year}-${nextPuzzle.day}`);
+
+            const puzzleCompleteStmt = year === nextPuzzle.year
+                ? `Nice job on completing puzzle ${year}-${day}!`
+                : `Awesome work on completing the last puzzle for ${year}!`
+            console.log(`${puzzleCompleteStmt} Setting up the next puzzle ${nextPuzzle.year}-${nextPuzzle.day}`);
+
             await setUpPuzzle(nextPuzzle);
         } else {
-            console.warn(`Found unexpeced level ${level}`);
+            console.warn(`Found unexpected level ${level}`);
         }
     }
 })();
