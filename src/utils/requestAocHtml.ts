@@ -18,8 +18,7 @@ const requestAocHtml = async ({ url }: {url: string }): Promise<string> => {
 
         return await htmlRes.text();
     } catch (err) {
-        console.error('getPuzzle error:', err);
-        throw new Error(`Failed to fetch puzzle for ${url}`);
+        throw err;
     }
 }
 

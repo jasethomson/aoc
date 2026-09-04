@@ -2,7 +2,8 @@ import * as cheerio from 'cheerio';
 import process from 'node:process';
 process.loadEnvFile();
 
-import { submitAnswer } from './utils';
+import { pickNextPuzzle, setUpPuzzle, submitAnswer } from './utils';
+import { Puzzle } from './types';
 
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
@@ -29,6 +30,11 @@ import { submitAnswer } from './utils';
     }
 
     const level = ansMatch[1];
+    if (level !== '1' && level !== '2') {
+        console.warn(`Invalid level inputed: ${level}, cannot submit answer`);
+        return;
+    }
+
     const answer = ansMatch[2];
 
     const answerResHtml = await submitAnswer({ day, year, level, answer });
@@ -39,12 +45,27 @@ import { submitAnswer } from './utils';
         console.warn('Found more than one article in the answer response');
     }
 
+    const answRes = $(article).text();
+
     console.log(`
         Submitted answer ${answer} for year ${year}, day ${day}, level ${level}.
         Answer Response:
         ____________________
 
-        ${$(article).text()}
+        ${answRes}
         ____________________
-    `)
+    `);
+
+    if (answRes.includes("That's the right answer!")) {
+        if (level === '1') {
+            console.log(`Congratulations on completing level 1, updating puzzle ${year}-${day} with level 2 instructions.`);
+            await setUpPuzzle({ day, year });
+        } else if (level === '2') {
+            const nextPuzzle = pickNextPuzzle({ year, day });
+            console.log(`Congratulations on completing puzzle ${year}-${day}, setting up the next puzzle ${nextPuzzle.year}-${nextPuzzle.day}`);
+            await setUpPuzzle(nextPuzzle);
+        } else {
+            console.warn(`Found unexpeced level ${level}`);
+        }
+    }
 })();

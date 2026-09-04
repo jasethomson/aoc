@@ -4,6 +4,7 @@ import formatDayStr from './formatDayStr';
 import getPuzzle from './getPuzzle';
 import getPuzzleInput from './getPuzzleInput';
 import getTsReady from './getTsReady';
+import pickNextPuzzle from './pickNextPuzzle';
 import requestAocHtml from './requestAocHtml';
 import setUpPuzzle from './setUpPuzzle';
 import submitAnswer from './submitAnswer';
@@ -18,6 +19,7 @@ export {
     getPuzzle,
     getPuzzleInput,
     getTsReady,
+    pickNextPuzzle,
     requestAocHtml,
     setUpPuzzle,
     submitAnswer,
