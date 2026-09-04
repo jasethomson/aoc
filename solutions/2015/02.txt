@@ -1,0 +1,33 @@
+import fs from 'fs/promises';
+import path from 'path';
+
+import { Puzzle } from '../../types';
+import { formatDayStr } from '../../utils';
+
+const main = async ({ year, day }: { year: number, day: number }): Promise<void> => {
+    const puzzleInput = await fs.readFile(path.join(__dirname, '../inputs/02.txt'), 'utf8');
+    console.info(`Puzzle ${year}-${day} has been setup, here's a sample of the input`, puzzleInput.slice(0, 150));
+
+    const puzzleInputArr = puzzleInput.split('\n').filter(Boolean);
+    part1(puzzleInputArr);
+};
+
+const part1 = (puzzleInput: string[]) => {
+    const totalSqft = puzzleInput.reduce(
+        (sqftSum, present) => {
+            const [ l, w, h ] = present.split('x').map(str => parseInt(str));
+            if (typeof l !== 'number' || typeof w !== 'number' || typeof h !== 'number') {
+                throw new Error(`Found invalid ft measurement: ${l}, ${w}, ${h}, present`);
+            }
+
+            const sqftNeeded = 2*(l*w) + 2*(w*h) + 2*(h*l);
+            const slackSqft = l*w;
+            return sqftSum + sqftNeeded + slackSqft;
+        },
+        0
+    );
+
+    console.log({ totalSqft });
+};
+
+export default main;
