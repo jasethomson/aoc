@@ -65,7 +65,7 @@ import { Puzzle } from './types';
 
             const puzzleCompleteStmt = year === nextPuzzle.year
                 ? `Nice job on completing puzzle ${year}-${day}!`
-                : `Awesome work on completing the last puzzle for ${year}!`
+                : `Awesome work on completing the last puzzle for ${year}!`;
             console.log(`${puzzleCompleteStmt} Setting up the next puzzle ${nextPuzzle.year}-${nextPuzzle.day}`);
 
             await setUpPuzzle(nextPuzzle);
