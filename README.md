@@ -7,7 +7,7 @@ The app is really just three scripts:
 ### setup script:
 This script will scrape the AOC puzzle text and input. It will then add a file for each of these, and a solution file which read the input, and logs out the first 150 chars. And lastly, it will add or update the index.ts file to call the puzzle solution function specified with the script.
 
-After solving part 1 of a puzzle, rerun the setup script to update the puzzle instructions with part 2 instructions.  
+After solving a part of the puzzle, the next puzzle will be setup automatically.
 
 ### dev script:
 This script will run/watch the index.ts file, which calls the solution function for the puzzle you're working on. 
@@ -47,9 +47,7 @@ npm run setup year=2015day=1
 # Run the application
 npm run dev year=2015day=1
 # Submit an anwer for a puzzle, format year{xxxx}day={xx} level={x}ans={xxx}
-npm run dev year=2015day=1 level=1ans=1645 
-# After solving part 1, rerun the setup script to update the puzzle instructions with part 2, no need to change the script input. 
-npm run setup year=2015day=1
+npm run dev year=2015day=1 level=1ans=1645
 ```
 
 Anytime you want to change the puzzle you're working on, just run the setup script with the new puzzle date, and then the dev script with the new puzzle date.
