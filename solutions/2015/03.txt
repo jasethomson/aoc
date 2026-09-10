@@ -1,0 +1,95 @@
+import fs from 'fs/promises';
+import path from 'path';
+
+import { Puzzle } from '../../types';
+
+type House = {
+    coordinates: [number, number];
+    numVisits: number;   
+};
+
+const main = async ({ year, day }: Puzzle): Promise<void> => {
+    const puzzleInput = await fs.readFile(path.join(__dirname, '../inputs/03.txt'), 'utf8');
+    console.info(`Puzzle ${year}-${day} has been setup, here's a sample of the input`, puzzleInput.slice(0, 150));
+    part1(puzzleInput);
+    part2(puzzleInput);
+};
+
+const part1 = (puzzleInput: string) => {
+    const housesDelivered: House[] = [{ coordinates: [0, 0], numVisits: 1 }];
+    let currentCoordinates: House['coordinates'] = [0, 0];
+    puzzleInput.split('').forEach((dir, dirIndex) => {
+        switch (dir) {
+            case '>':
+                currentCoordinates[0] += 1;
+                break;
+            case '<':
+                currentCoordinates[0] -= 1;
+                break;
+            case '^':
+                currentCoordinates[1] += 1;
+                break;
+            case 'v':
+                currentCoordinates[1] -= 1;
+                break;
+            default:
+                throw new Error(`Unexpected direction ${dir} found at ${dirIndex}`);
+        };
+
+        const houseFound = housesDelivered.find((house, _) => 
+            (house.coordinates[0] === currentCoordinates[0] && house.coordinates[1] === currentCoordinates[1]));
+        if (houseFound) {
+            houseFound.numVisits += 1;
+        } else {
+            housesDelivered.push({ coordinates: [...currentCoordinates], numVisits: 1 });
+        }
+    });
+
+    console.log('houses delivered', housesDelivered.length);
+}
+
+const part2 = (puzzleInput: string) => {
+    const housesDelivered: House[] = [{ coordinates: [0, 0], numVisits: 2 }];
+    let santaCoordinates: House['coordinates'] = [0, 0];
+    let roboSantaCoordinates: House['coordinates'] = [0, 0];
+    puzzleInput.split('').forEach((dir, dirIndex) => {
+        let coordinatesToUse = dirIndex % 2 === 0
+            ? santaCoordinates
+            : roboSantaCoordinates; 
+        coordinatesToUse = updateCoordinates(coordinatesToUse, dir);
+
+        const houseFound = housesDelivered.find((house, _) => 
+            (house.coordinates[0] === coordinatesToUse[0] && house.coordinates[1] === coordinatesToUse[1]));
+        if (houseFound) {
+            houseFound.numVisits += 1;
+        } else {
+            housesDelivered.push({ coordinates: [...coordinatesToUse], numVisits: 1 });
+        }
+    });
+
+    console.log('houses delivered', housesDelivered.length);
+}
+
+const updateCoordinates = (coordinates: House['coordinates'], dir: string): House['coordinates'] => {
+        switch (dir) {
+        case '>':
+            coordinates[0] += 1;
+            break;
+        case '<':
+            coordinates[0] -= 1;
+            break;
+        case '^':
+            coordinates[1] += 1;
+            break;
+        case 'v':
+            coordinates[1] -= 1;
+            break;
+        default:
+            throw new Error(`Unexpected direction ${dir}.`);
+    };
+
+    return coordinates;
+}
+
+export default main;
+
