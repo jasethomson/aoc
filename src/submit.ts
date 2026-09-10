@@ -2,8 +2,7 @@ import * as cheerio from 'cheerio';
 import process from 'node:process';
 process.loadEnvFile();
 
-import { pickNextPuzzle, setUpPuzzle, submitAnswer } from './utils';
-import { Puzzle } from './types';
+import { pickNextPuzzle, setUpPuzzle, submitAnswer, updateIndexWithPuzzle } from './utils';
 
 (async () => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
@@ -69,6 +68,7 @@ import { Puzzle } from './types';
             console.log(`${puzzleCompleteStmt} Setting up the next puzzle ${nextPuzzle.year}-${nextPuzzle.day}`);
 
             await setUpPuzzle(nextPuzzle);
+            await updateIndexWithPuzzle(nextPuzzle);
         } else {
             console.warn(`Found unexpected level ${level}`);
         }
