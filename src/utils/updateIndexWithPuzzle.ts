@@ -61,7 +61,23 @@ const updateIndexWithPuzzle = async ({ year, day }: Puzzle ): Promise<void> => {
         const indexToAddRunPuzzle = updatedFileContents.indexOf(runPuzzleMatchStr) + runPuzzleMatchStr.length;
         updatedFileContents = updatedFileContents.slice(0, indexToAddRunPuzzle) + '\n' + runPuzzleLine + updatedFileContents.slice(indexToAddRunPuzzle);
     }
-    
+
+    const yearChkRegex = /const importedYear = parseInt\('(\d+)'\);/;
+    if (yearChkRegex.test(fileContents)) {
+        if (!updatedFileContents) {
+            updatedFileContents = fileContents;
+        }
+        updatedFileContents = updatedFileContents.replace(yearChkRegex, `const importedYear = parseInt('${year}');`);
+    }
+
+    const dayChkRegex = /const importedDay = parseInt\('(\d+)'\);/;
+    if (dayChkRegex.test(fileContents)) {
+        if (!updatedFileContents) {
+            updatedFileContents = fileContents;
+        }
+        updatedFileContents = updatedFileContents.replace(dayChkRegex, `const importedDay = parseInt('${day}');`);
+    }
+
     if (updatedFileContents) {
         await writeFileAndCreateDirs({ absolutePath: indexPath, contents: updatedFileContents });
     }

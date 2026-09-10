@@ -19,6 +19,14 @@ process.loadEnvFile();
     const year = parseInt(yearDayMatch[1]);
     const day = parseInt(yearDayMatch[2]);
 
+    const importedYear = parseInt('0');
+    const importedDay = parseInt('0');
+
+    if (importedYear !== year || importedDay !== day) {
+        console.error(`Found mismatched puzzle, rerun setup for this puzzle, and then rerun the dev script, command: **npm run setup year=${year}day=${day}**`);
+        return;
+    }
+
     console.info(`Running app for puzzle ${year}-${day}`);
 
     // run puzzle here
