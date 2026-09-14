@@ -1,6 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { createHash } from 'crypto';
+import { cpus } from 'os';
+import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
 
 import { Puzzle } from '../../types';
 
@@ -8,8 +10,22 @@ const main = async ({ year, day }: Puzzle): Promise<void> => {
     const puzzleInput = await fs.readFile(path.join(__dirname, '../inputs/04.txt'), 'utf8');
     console.info(`Puzzle ${year}-${day} has been setup, here's a sample of the input`, puzzleInput.slice(0, 150));
 
+    console.time('Part 1');
     part1(puzzleInput);
+    console.timeEnd('Part 1');
+
+    console.time('Part 2');
     part2(puzzleInput);
+    console.timeEnd('Part 2');
+    
+    console.time('Part 1, Attempt 2');
+    await part1Attempt2(puzzleInput);
+    console.timeEnd('Part 1, Attempt 2');
+
+
+    console.time('Part 2, Attempt 2');
+    await part2Attempt2(puzzleInput);
+    console.timeEnd('Part 2, Attempt 2');
 };
 
 const part1 = (puzzleInput: string) => {
@@ -31,10 +47,7 @@ const part2 = (puzzleInput: string) => {
 }
 
 const findLowestMatchingNum = (puzzleInput: string, numToTest: number, prefixNumZeros: number) => {
-    let prefix = '';
-    for (let i = 0; i < prefixNumZeros; i++) {
-        prefix += '0';
-    }
+    const prefix = Array(prefixNumZeros).fill('0').join('');
 
     let foundLowestMatchingStr = false;
     while (!foundLowestMatchingStr) {
@@ -49,8 +62,78 @@ const findLowestMatchingNum = (puzzleInput: string, numToTest: number, prefixNum
     return numToTest;
 }
 
-function md5(str: string, encoding: BufferEncoding = 'hex') {
+const md5 = (str: string, encoding: BufferEncoding = 'hex') => {
   return createHash('md5').update(str).digest(encoding);
+};
+
+const part1Attempt2 = async (puzzleInput: string) => {
+    puzzleInput = puzzleInput.replace(/\n/g, '');
+    console.log({puzzleInput});
+    
+
+    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 100000, 5);
+    
+    console.log('part 1, attempt 2:', { lowestMatchingNum });
+}
+
+const useWorkersToFindLowestMatchingNum = async (puzzleInput: string, numToTest: number, prefixNumZeros: number) => {
+    return new Promise((resolve) => {
+        const numWorkers = cpus().length;
+        const workers: Worker[] = [];
+    
+        const prefix = Array(prefixNumZeros).fill('0').join('');
+        const workerPromises = Array.from({ length: numWorkers }).map((_, index) => {
+            return new Promise<Number>((workerResolve, workerReject) => {
+                const worker = new Worker(__filename, {
+                    workerData: {
+                        puzzleInput,
+                        numToTest: numToTest + index,
+                        totalWorkers: numWorkers,
+                        prefix,
+                    }
+                });
+
+                worker.on('message', (numMatch) => workerResolve(numMatch));
+                worker.on('messageerror', (error) => workerReject(error));
+                workers.push(worker);
+            });
+        });
+
+        Promise.race(workerPromises).then((numMatch) => {
+            workers.forEach(w => w.terminate());
+            resolve(numMatch);
+        })
+    });
+} 
+
+const part2Attempt2 = async (puzzleInput: string) => {
+    puzzleInput = puzzleInput.replace(/\n/g, '');
+    console.log({puzzleInput});
+
+    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 100000, 6);
+
+    console.log('part 2, attempt 2:', { lowestMatchingNum });
 }
 
 export default main;
+
+if (!isMainThread) {
+    if (!parentPort) {
+        throw new Error('No parentPort found for worker');
+    }
+
+    const { puzzleInput, numToTest, totalWorkers, prefix } = workerData;
+
+    let currentNumToTest = numToTest;
+    let foundLowestMatchingStr = false;
+    while (!foundLowestMatchingStr) {
+        const hash = md5(`${puzzleInput}${currentNumToTest}`);
+        if (hash.startsWith(prefix)) {
+            foundLowestMatchingStr = true;
+        } else {
+            currentNumToTest += totalWorkers;
+        }
+    }
+
+    parentPort.postMessage(currentNumToTest);
+}
