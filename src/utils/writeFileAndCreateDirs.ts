@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const writeFileAndCreateDirs = async ({ absolutePath, contents }: { absolutePath: string, contents: string }) => {
+const writeFileAndCreateDirs = async ({ absolutePath, contents }: { absolutePath: string, contents: string }): Promise<void> => {
   const loggingName = absolutePath.split(/\\|\//).pop();
   try {
       await fs.writeFile(absolutePath, contents);

@@ -30,7 +30,7 @@ const submitAnswer = async ({ year, day, level, answer }: SubmitAnswer): Promise
         return await htmlRes.text();
     } catch (err) {
         console.error('submitAnswer error:', err);
-        throw new Error(`Failed to submit puzzle for ${url}`);
+        throw err;
     }
 }
 

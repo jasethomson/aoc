@@ -3,7 +3,7 @@ process.loadEnvFile();
 
 import { setUpPuzzle, updateIndexWithPuzzle } from './utils';
 
-(async () => {
+(async (): Promise<void> => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
     if (process.argv.length !== 3 || !yearDayRegex.test(process.argv[2])) {
         console.warn('Require year and day input in this format: year=xxxxday=xx, please retry.');

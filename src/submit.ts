@@ -4,7 +4,7 @@ process.loadEnvFile();
 
 import { pickNextPuzzle, setUpPuzzle, submitAnswer, updateIndexWithPuzzle } from './utils';
 
-(async () => {
+(async (): Promise<void> => {
     const yearDayRegex = /year=(\d{4})day=(\d{1,2})/;
     const ansRegex = /level=(\d)ans=(.+)/;
     if (process.argv.length !== 4 || !yearDayRegex.test(process.argv[2]) || !ansRegex.test(process.argv[3])) {

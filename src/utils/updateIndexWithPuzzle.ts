@@ -52,7 +52,7 @@ const updateIndexWithPuzzle = async ({ year, day }: Puzzle ): Promise<void> => {
     }
 
     const runPuzzleLine = '    await main({ year, day });';
-    const runPuzzleRegex = /    await main\({ year, day }\);/;
+    const runPuzzleRegex = /s{4,}await main\({ year, day }\);/;
     if (!runPuzzleRegex.test(fileContents)) {
         if (!updatedFileContents) {
             updatedFileContents = fileContents;

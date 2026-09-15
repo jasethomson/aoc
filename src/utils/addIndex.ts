@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import checkIfFileExists from './checkIfFileExists';
-const addIndex = async () => {
+const addIndex = async (): Promise<void> => {
   const indexPath = '../index.ts';
   const absolutePath = path.join(__dirname, indexPath);
   const fileExists = await checkIfFileExists({ absolutePath });
@@ -12,7 +12,7 @@ const addIndex = async () => {
 
   try {
     await fs.copyFile(templatePath, absolutePath);
-  } catch (err) {
+  } catch {
     console.error('Error adding/updating index file for puzzle');
     return;
   }
