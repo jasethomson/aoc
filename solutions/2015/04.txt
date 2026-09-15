@@ -28,7 +28,7 @@ const main = async ({ year, day }: Puzzle): Promise<void> => {
     console.timeEnd('Part 2, Attempt 2');
 };
 
-const part1 = (puzzleInput: string) => {
+const part1 = (puzzleInput: string): void => {
     puzzleInput = puzzleInput.replace(/\n/g, '');
     console.log({puzzleInput});
 
@@ -37,7 +37,7 @@ const part1 = (puzzleInput: string) => {
     console.log('part 1:', { lowestMatchingNum });
 }
 
-const part2 = (puzzleInput: string) => {
+const part2 = (puzzleInput: string): void => {
     puzzleInput = puzzleInput.replace(/\n/g, '');
     console.log({puzzleInput});
 
@@ -46,7 +46,7 @@ const part2 = (puzzleInput: string) => {
     console.log('part 2:', { lowestMatchingNum });
 }
 
-const findLowestMatchingNum = (puzzleInput: string, numToTest: number, prefixNumZeros: number) => {
+const findLowestMatchingNum = (puzzleInput: string, numToTest: number, prefixNumZeros: number): number => {
     const prefix = Array(prefixNumZeros).fill('0').join('');
 
     let foundLowestMatchingStr = false;
@@ -62,28 +62,28 @@ const findLowestMatchingNum = (puzzleInput: string, numToTest: number, prefixNum
     return numToTest;
 }
 
-const md5 = (str: string, encoding: BufferEncoding = 'hex') => {
+const md5 = (str: string, encoding: BufferEncoding = 'hex'): string => {
   return createHash('md5').update(str).digest(encoding);
 };
 
-const part1Attempt2 = async (puzzleInput: string) => {
+const part1Attempt2 = async (puzzleInput: string): Promise<void> => {
     puzzleInput = puzzleInput.replace(/\n/g, '');
     console.log({puzzleInput});
     
 
-    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 100000, 5);
+    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 1, 5);
     
     console.log('part 1, attempt 2:', { lowestMatchingNum });
 }
 
-const useWorkersToFindLowestMatchingNum = async (puzzleInput: string, numToTest: number, prefixNumZeros: number) => {
+const useWorkersToFindLowestMatchingNum = async (puzzleInput: string, numToTest: number, prefixNumZeros: number): Promise<number> => {
     return new Promise((resolve) => {
         const numWorkers = cpus().length;
         const workers: Worker[] = [];
     
         const prefix = Array(prefixNumZeros).fill('0').join('');
         const workerPromises = Array.from({ length: numWorkers }).map((_, index) => {
-            return new Promise<Number>((workerResolve, workerReject) => {
+            return new Promise<number>((workerResolve, workerReject) => {
                 const worker = new Worker(__filename, {
                     workerData: {
                         puzzleInput,
@@ -102,15 +102,15 @@ const useWorkersToFindLowestMatchingNum = async (puzzleInput: string, numToTest:
         Promise.race(workerPromises).then((numMatch) => {
             workers.forEach(w => w.terminate());
             resolve(numMatch);
-        })
+        });
     });
 } 
 
-const part2Attempt2 = async (puzzleInput: string) => {
+const part2Attempt2 = async (puzzleInput: string): Promise<void> => {
     puzzleInput = puzzleInput.replace(/\n/g, '');
     console.log({puzzleInput});
 
-    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 100000, 6);
+    const lowestMatchingNum = await useWorkersToFindLowestMatchingNum(puzzleInput, 1, 6);
 
     console.log('part 2, attempt 2:', { lowestMatchingNum });
 }
