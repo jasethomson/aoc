@@ -11,18 +11,17 @@ import submitAnswer from './submitAnswer';
 import updateIndexWithPuzzle from './updateIndexWithPuzzle';
 import writeFileAndCreateDirs from './writeFileAndCreateDirs';
 
-
 export {
-    addIndex,
-    checkIfFileExists,
-    formatDayStr,
-    getPuzzle,
-    getPuzzleInput,
-    getTsReady,
-    pickNextPuzzle,
-    requestAocHtml,
-    setUpPuzzle,
-    submitAnswer,
-    updateIndexWithPuzzle,
-    writeFileAndCreateDirs,
+  addIndex,
+  checkIfFileExists,
+  formatDayStr,
+  getPuzzle,
+  getPuzzleInput,
+  getTsReady,
+  pickNextPuzzle,
+  requestAocHtml,
+  setUpPuzzle,
+  submitAnswer,
+  updateIndexWithPuzzle,
+  writeFileAndCreateDirs,
 };

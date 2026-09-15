@@ -1,4 +1,4 @@
 export interface Puzzle {
-    year: number;
-    day: number;
+  year: number;
+  day: number;
 }
