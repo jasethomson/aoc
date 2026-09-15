@@ -9,7 +9,8 @@
     "submit": "tsx src/submit.ts",
     "lint": "eslint . --ext .ts",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format": "prettier --write \"*/**/*.{ts,json}\" --ignore-path .prettierignore"
   },
   "repository": {
     "type": "git",
@@ -39,9 +40,9 @@
     "globals": "^17.12.0"
   },
   "lint-staged": {
-    "*.{ts}": [
-      "eslint",
-      "prettier"
+    "*.{ts,json}": [
+      "eslint --fix",
+      "prettier --write --ignore-path .prettierignore"
     ]
-}
+  }
 }

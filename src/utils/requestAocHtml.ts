@@ -1,21 +1,21 @@
-const requestAocHtml = async ({ url }: {url: string }): Promise<string> => {
-    if (typeof process.env.AOC_COOKIE !== 'string') {
-        throw new Error('Invalid cookie input for getPuzzle');
-    }
+const requestAocHtml = async ({ url }: { url: string }): Promise<string> => {
+  if (typeof process.env.AOC_COOKIE !== 'string') {
+    throw new Error('Invalid cookie input for getPuzzle');
+  }
 
-    const reqOptions = {
-        headers: {
-            cookie: process.env.AOC_COOKIE
-        }
-    };
+  const reqOptions = {
+    headers: {
+      cookie: process.env.AOC_COOKIE,
+    },
+  };
 
-    const htmlRes = await fetch(url, reqOptions);
-    
-    if (!htmlRes.ok) {
-        throw new Error(`Error code ${htmlRes.status} while requesting puzzle for ${url}`);
-    }
+  const htmlRes = await fetch(url, reqOptions);
 
-    return await htmlRes.text();
-}
+  if (!htmlRes.ok) {
+    throw new Error(`Error code ${htmlRes.status} while requesting puzzle for ${url}`);
+  }
+
+  return await htmlRes.text();
+};
 
 export default requestAocHtml;
